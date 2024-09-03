@@ -4,8 +4,8 @@ export default defineNitroConfig({
   srcDir: "./",
   serverAssets: [
     {
-      baseName: "app",
-      dir: "./app",
+      baseName: "views",
+      dir: "./views",
     },
   ],
 });
