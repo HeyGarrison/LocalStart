@@ -1,3 +1,14 @@
-# Nitro starter
+# GarrisonStack (WIP)
+A modern Typescript framework with a first class AWS integration powered by LocalStack.
 
-Look at the [nitro quick start](https://nitro.unjs.io/guide#quick-start) to learn more how to get started.
+### Install
+
+1. Create a dynamo table:
+```
+awslocal dynamodb create-table \
+    --table-name products \
+    --key-schema AttributeName=id,KeyType=HASH \
+    --attribute-definitions AttributeName=id,AttributeType=S \
+    --billing-mode PAY_PER_REQUEST \
+    --region us-east-1
+```
