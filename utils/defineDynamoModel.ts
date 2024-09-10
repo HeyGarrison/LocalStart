@@ -238,11 +238,11 @@ export function defineDynamoModel(adapter: Adapter) {
           return this.loadAssociations(result);
         },
 
-        async findAll(params?: Record<string, any>) {
-          const results = await adapter.findAll(_tableName, params);
-          return Promise.all(
-            results.map((result) => this.loadAssociations(result)),
-          );
+        async findAll(params: Record<string, any> = _fields) {
+          const results = await adapter.findAll(_tableName, {
+            id: params.id,
+          });
+          return results;
         },
 
         async where(conditions: Record<string, any>) {

@@ -1,6 +1,12 @@
 # GarrisonStack (WIP)
 A modern Typescript framework with a first class AWS integration powered by LocalStack.
 
+### Prerequisites
+- Node / npm / pnpm / yarn
+- LocalStack
+  - `brew install localstack/tap/localstack-cli`
+- Run `make start`
+
 ### Install
 
 1. Create a dynamo table:

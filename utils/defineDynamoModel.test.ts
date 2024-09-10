@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 import {
   defineDynamoModel,
   required,
@@ -16,11 +16,11 @@ vi.mock("h3", () => ({
 
 // Define the structure of the mock adapter
 interface MockAdapter extends Adapter {
-  create: vi.Mock;
-  update: vi.Mock;
-  destroy: vi.Mock;
-  findById: vi.Mock;
-  findAll: vi.Mock;
+  create: Mock;
+  update: Mock;
+  destroy: Mock;
+  findById: Mock;
+  findAll: Mock;
 }
 
 // Mock adapter

@@ -9,8 +9,15 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import { nanoid } from "nanoid";
 
+const config = useRuntimeConfig();
+
 const client = new DynamoDBClient({
-  region: "us-east-2",
+  region: "us-east-1",
+  credentials: {
+    accessKeyId: config.aws.accessKeyId,
+    secretAccessKey: config.aws.secretAccessKey,
+  },
+  endpoint: "http://localhost:4566",
 });
 const docClient = DynamoDBDocumentClient.from(client);
 

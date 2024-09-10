@@ -4,9 +4,12 @@ import {
   minLength,
   maxLength,
 } from "../utils/defineDynamoModel";
-import { dynamoAdapter } from "../utils/adapters/dynamoAdapter"; // Assume you have this adapter
+import { dynamodbAdapter } from "../utils/adapters/dynamodbAdapter";
 
-export const Product = defineDynamoModel(dynamoAdapter)
+// Need to get some types in here
+// we already have some basic validation, etc
+// I'd hate to add another dep, but valibot and zod are interesting...
+export const Product = defineDynamoModel(dynamodbAdapter)
   .tableName("products")
   .field("id", "string")
   .field("name", "string")
@@ -16,13 +19,11 @@ export const Product = defineDynamoModel(dynamoAdapter)
   .field("stock", "number")
   .field("created_at", "string")
   .field("updated_at", "string")
-
   .globalSecondaryIndex({
     name: "CategoryIndex",
     hashKey: "category",
     rangeKey: "name",
   })
-
   .validates("name", required, minLength(3), maxLength(100))
   .validates("description", maxLength(1000))
   .validates(
@@ -37,17 +38,14 @@ export const Product = defineDynamoModel(dynamoAdapter)
       (Number.isInteger(value) && value >= 0) ||
       "Stock must be a non-negative integer",
   )
-
   .addCallback("beforeCreate", (record) => {
     // You can add any logic here, for example:
     record.created_at = new Date().toISOString();
     record.updated_at = new Date().toISOString();
   })
-
   .addCallback("beforeUpdate", (record) => {
     record.updated_at = new Date().toISOString();
   })
-
   .modelize();
 
 export type ProductType = ReturnType<typeof Product.create>;
