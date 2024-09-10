@@ -47,5 +47,3 @@ export const Product = defineDynamoModel(dynamodbAdapter)
     record.updated_at = new Date().toISOString();
   })
   .modelize();
-
-export type ProductType = ReturnType<typeof Product.create>;

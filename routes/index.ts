@@ -8,8 +8,8 @@ export default defineHTMLPage(async () => {
   //   category: "Shop All",
   //   stock: 10,
   // });
-  const products = await Product.findAll();
-  console.log(products);
+  // const products = await Product.findAll();
+  // console.log(products);
   return {
     hello: "world",
   };
