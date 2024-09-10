@@ -25,7 +25,7 @@ export const Product = defineDynamoModel(dynamodbAdapter)
     rangeKey: "name",
   })
   .validates("name", required, minLength(3), maxLength(100))
-  .validates("description", maxLength(1000))
+  .validates("description", required, maxLength(1000))
   .validates(
     "price",
     required,

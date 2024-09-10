@@ -3,7 +3,7 @@ import {
   DynamoDBDocumentClient,
   PutCommand,
   GetCommand,
-  QueryCommand,
+  ScanCommand,
   UpdateCommand,
   DeleteCommand,
 } from "@aws-sdk/lib-dynamodb";
@@ -36,32 +36,9 @@ export const dynamodbAdapter = {
   },
 
   async findAll(tableName: string, params: Record<string, any> = {}) {
-    const keyConditions = Object.entries(params)
-      .map(([key, value]) => `#${key} = :${key}`)
-      .join(" AND ");
-
-    const expressionAttributeNames = Object.keys(params).reduce(
-      (acc, key) => {
-        acc[`#${key}`] = key;
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
-
-    const expressionAttributeValues = Object.entries(params).reduce(
-      (acc, [key, value]) => {
-        acc[`:${key}`] = value;
-        return acc;
-      },
-      {} as Record<string, any>,
-    );
-
     const result = await docClient.send(
-      new QueryCommand({
+      new ScanCommand({
         TableName: tableName,
-        KeyConditionExpression: keyConditions,
-        ExpressionAttributeNames: expressionAttributeNames,
-        ExpressionAttributeValues: expressionAttributeValues,
       }),
     );
 
