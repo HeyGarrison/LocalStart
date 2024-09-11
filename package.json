@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:backend": "pnpm --filter backend dev",
+    "dev:server": "pnpm --filter server dev",
     "dev:react": "pnpm --filter react dev",
     "build:backend": "pnpm --filter backend build",
     "build:react": "pnpm --filter react build",
-    "start:backend": "pnpm --filter backend start",
+    "start:server": "pnpm --filter server start",
     "start:react": "pnpm --filter react preview"
   },
   "keywords": [],

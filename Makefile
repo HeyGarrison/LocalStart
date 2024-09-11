@@ -18,7 +18,7 @@ start-localstack:
 start-app:
 	@echo "Starting apps..."
 	pnpm install
-	pnpm run dev:backend & pnpm run dev:react
+	pnpm run dev:server & pnpm run dev:react
 
 stop-localstack:
 	@echo "Stopping LocalStack..."
