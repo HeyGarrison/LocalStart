@@ -5,7 +5,7 @@ LOCALSTACK_VERSION := latest
 NITRO_VERSION := latest
 
 # Targets
-.PHONY: start start-localstack start-app stop stop-localstack
+.PHONY: start start-localstack start-app stop stop-localstack stop-app
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
@@ -16,9 +16,9 @@ start-localstack:
 	localstack wait
 
 start-app:
-	@echo "Starting Nitro..."
+	@echo "Starting apps..."
 	pnpm install
-	pnpm dev
+	pnpm run dev:backend & pnpm run dev:react
 
 stop-localstack:
 	@echo "Stopping LocalStack..."
