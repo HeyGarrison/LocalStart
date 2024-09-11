@@ -1,22 +1,20 @@
 {
-  "private": true,
+  "name": "localstart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "nitro build",
-    "dev": "nitro dev",
-    "prepare": "nitro prepare",
-    "preview": "node .output/server/index.mjs",
-    "test": "vitest --ui"
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:react": "pnpm --filter react dev",
+    "build:backend": "pnpm --filter backend build",
+    "build:react": "pnpm --filter react build",
+    "start:backend": "pnpm --filter backend start",
+    "start:react": "pnpm --filter react preview"
   },
-  "packageManager": "pnpm@9.9.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@vitest/ui": "^2.0.5",
-    "nitropack": "latest",
-    "vitest": "^2.0.5"
-  },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.637.0",
-    "@aws-sdk/lib-dynamodb": "^3.637.0",
-    "handlebars": "^4.7.8",
-    "nanoid": "^5.0.7"
+    "typescript": "^5.6.2"
   }
 }

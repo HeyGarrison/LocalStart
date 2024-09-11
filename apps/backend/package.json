@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev",
+    "prepare": "nitro prepare",
+    "preview": "node .output/server/index.mjs",
+    "test": "vitest --ui"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "devDependencies": {
+    "@vitest/ui": "^2.0.5",
+    "nitropack": "latest",
+    "vitest": "^2.0.5",
+    "vite": "^5.4.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.637.0",
+    "@aws-sdk/lib-dynamodb": "^3.637.0",
+    "handlebars": "^4.7.8",
+    "nanoid": "^5.0.7"
+  }
+}

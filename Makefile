@@ -5,17 +5,17 @@ LOCALSTACK_VERSION := latest
 NITRO_VERSION := latest
 
 # Targets
-.PHONY: start start-localstack start-nitro stop stop-localstack
+.PHONY: start start-localstack start-app stop stop-localstack
 
-start: start-localstack start-nitro
-stop: stop-localstack stop-nitro
+start: start-localstack start-app
+stop: stop-localstack stop-app
 
 start-localstack:
 	@echo "Starting LocalStack..."
 	localstack start -d
 	localstack wait
 
-start-nitro:
+start-app:
 	@echo "Starting Nitro..."
 	pnpm install
 	pnpm dev
