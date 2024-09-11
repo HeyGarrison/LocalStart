@@ -12,34 +12,6 @@ importers:
         specifier: ^5.6.2
         version: 5.6.2
 
-  apps/backend:
-    dependencies:
-      '@aws-sdk/client-dynamodb':
-        specifier: ^3.637.0
-        version: 3.649.0
-      '@aws-sdk/lib-dynamodb':
-        specifier: ^3.637.0
-        version: 3.649.0(@aws-sdk/client-dynamodb@3.649.0)
-      handlebars:
-        specifier: ^4.7.8
-        version: 4.7.8
-      nanoid:
-        specifier: ^5.0.7
-        version: 5.0.7
-    devDependencies:
-      '@vitest/ui':
-        specifier: ^2.0.5
-        version: 2.0.5(vitest@2.0.5)
-      nitropack:
-        specifier: latest
-        version: 2.9.7
-      vite:
-        specifier: ^5.4.3
-        version: 5.4.4(@types/node@22.5.4)
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@vitest/ui@2.0.5)
-
   apps/react:
     dependencies:
       '@radix-ui/react-icons':
@@ -115,6 +87,34 @@ importers:
       vite:
         specifier: ^5.4.1
         version: 5.4.4(@types/node@22.5.4)
+
+  apps/server:
+    dependencies:
+      '@aws-sdk/client-dynamodb':
+        specifier: ^3.637.0
+        version: 3.649.0
+      '@aws-sdk/lib-dynamodb':
+        specifier: ^3.637.0
+        version: 3.649.0(@aws-sdk/client-dynamodb@3.649.0)
+      handlebars:
+        specifier: ^4.7.8
+        version: 4.7.8
+      nanoid:
+        specifier: ^5.0.7
+        version: 5.0.7
+    devDependencies:
+      '@vitest/ui':
+        specifier: ^2.0.5
+        version: 2.0.5(vitest@2.0.5)
+      nitropack:
+        specifier: latest
+        version: 2.9.7
+      vite:
+        specifier: ^5.4.3
+        version: 5.4.4(@types/node@22.5.4)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@vitest/ui@2.0.5)
 
 packages:
 
