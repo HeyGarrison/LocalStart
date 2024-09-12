@@ -1,3 +1,3 @@
 export default defineEventHandler(() => {
-  return { hello: "API" };
+  return { hello: "API2" };
 });

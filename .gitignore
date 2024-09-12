@@ -23,3 +23,28 @@ dist-ssr
 *.sln
 *.sw?
 *.zip
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
+crash.log
+crash.*.log
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore override files as they are usually used to override resources locally and don't need to be committed
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore environment-specific files
+.envrc
+.env

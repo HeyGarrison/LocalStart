@@ -24,18 +24,18 @@ awslocal s3 sync apps/react/dist/ s3://localstart-react
 
 # Create IAM role for Lambda
 echo "Creating IAM role for Lambda..."
-# awslocal iam create-role --role-name lambda-role --assume-role-policy-document '{
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "lambda.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }'
+awslocal iam create-role --role-name lambda-role --assume-role-policy-document '{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}'
 
 # # Create Lambda function
 echo "Creating Lambda function..."
