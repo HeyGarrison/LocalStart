@@ -94,20 +94,20 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 # Build and zip Lambda function
-resource "null_resource" "build_lambda" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+# resource "null_resource" "build_lambda" {
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
 
-  provisioner "local-exec" {
-    command = <<EOT
-      echo "Building and zipping Lambda function..."
-      pnpm --filter server build && \
-      cd ${path.module}/../../apps/server/.output/server
-      zip -r ../lambda.zip .
-    EOT
-  }
-}
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       echo "Building and zipping Lambda function..."
+#       pnpm --filter server build && \
+#       cd ${path.module}/../../apps/server/.output/server
+#       zip -r ../lambda.zip .
+#     EOT
+#   }
+# }
 
 # Lambda function
 resource "aws_lambda_function" "server" {
@@ -116,8 +116,9 @@ resource "aws_lambda_function" "server" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"
   runtime       = "nodejs20.x"
+  # source_code_hash = filebase64sha256("./../../apps/server/.output/lambda.zip")
 
-  depends_on = [null_resource.build_lambda]
+  # depends_on = [null_resource.build_lambda]
 }
 
 # API Gateway
