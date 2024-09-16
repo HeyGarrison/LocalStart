@@ -13,6 +13,11 @@ jobs:
         uses: LocalStack/setup-localstack@v0.2.2
         with:
           image-tag: "latest"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          state-backend: ephemeral
+          state-action: stop
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -39,7 +44,7 @@ jobs:
       - name: Running terraform...
         run: |
           zip -r ./terraform/preview/lambda.zip ./apps/server/.output/server
-          ls && pwd
           cd ./terraform/preview
+          ls && pwd
           tflocal init
           tflocal apply --auto-approve
