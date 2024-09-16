@@ -1,4 +1,4 @@
-# GarrisonStack (WIP)
+# LocalStart (WIP)
 A modern Typescript framework with a first class AWS integration powered by LocalStack.
 
 ### Prerequisites
