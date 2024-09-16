@@ -13,5 +13,11 @@ jobs:
         uses: LocalStack/setup-localstack@v0.2.2
         with:
           image-tag: "latest"
-          install-awslocal: "true"
-          intall-tflocal: "true"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Run Terraform
+        run: |
+          terraform init
+          terraform apply --auto-approve
