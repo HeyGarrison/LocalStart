@@ -9,16 +9,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Start LocalStack
-        uses: LocalStack/setup-localstack@v0.2.2
-        with:
-          image-tag: "latest"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          state-backend: ephemeral
-          state-action: stop
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
-
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -30,21 +20,30 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
+      - name: LocalStack Preview
+        uses: LocalStack/setup-localstack@v0.2.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          state-backend: ephemeral
+          state-action: start
+          include-preview: "true"
+          install-awslocal: "true"
+          preview-cmd: |
+            pip install terraform-local
+            pnpm install
+            pnpm --filter react build
+            pnpm --filter server build
+            zip -r ./terraform/preview/lambda.zip ./apps/server/.output/server
+            cd ./terraform/preview
+            ls && pwd
+            tflocal init
+            tflocal apply --auto-approve
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
 
-      - name: Install deps
-        run: |
-          pip install terraform-local
-          pnpm install
-
-      - name: Build apps
-        run: |
-          pnpm --filter react build
-          pnpm --filter server build
-
-      - name: Running terraform...
-        run: |
-          zip -r ./terraform/preview/lambda.zip ./apps/server/.output/server
-          cd ./terraform/preview
-          ls && pwd
-          tflocal init
-          tflocal apply --auto-approve
+      - name: Deploy Preview
+        uses: LocalStack/setup-localstack/ephemeral/startup@v0.2.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          localstack-api-key: ${{ secrets.LOCALSTACK_API_KEY }}
+          preview-cmd: |
