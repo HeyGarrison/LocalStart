@@ -1,0 +1,17 @@
+name: LocalStack Workflow
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@v0.2.2
+        with:
+          image-tag: "latest"
+          install-awslocal: "true"
+          intall-tflocal: "true"
