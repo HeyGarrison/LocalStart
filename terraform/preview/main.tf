@@ -8,7 +8,6 @@ provider "aws" {
   region                      = var.region
   access_key                  = "test"
   secret_key                  = "test"
-  aws_account_id              = "test"
   skip_credentials_validation = true
   skip_metadata_api_check     = true
   skip_requesting_account_id  = true
@@ -76,7 +75,7 @@ resource "aws_iam_role" "lambda_role" {
 
 # Lambda function
 resource "aws_lambda_function" "server" {
-  filename      = "${path.module}/../../apps/server/.output/lambda.zip"
+  filename      = "${path.module}/lambda.zip"
   function_name = "localstart-server"
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"
