@@ -38,7 +38,8 @@ jobs:
 
       - name: Running terraform...
         run: |
-          zip -r ./apps/server/.output/server/lambda.zip ./apps/server/.output/server
+          zip -r ./terraform/preview/lambda.zip ./apps/server/.output/server
+          ls && pwd
           cd ./terraform/preview
           tflocal init
           tflocal apply --auto-approve
