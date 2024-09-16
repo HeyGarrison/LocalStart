@@ -32,17 +32,6 @@ resource "aws_s3_bucket_website_configuration" "frontend" {
   }
 }
 
-# Build React app
-resource "null_resource" "build_frontend" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-
-  provisioner "local-exec" {
-    command = "echo 'Building React app...' && pnpm --filter react build"
-  }
-}
-
 # Upload built files to S3
 resource "aws_s3_object" "frontend_files" {
   for_each = fileset("${path.module}/../../apps/react/dist", "**/*")
@@ -53,8 +42,6 @@ resource "aws_s3_object" "frontend_files" {
   etag   = filemd5("${path.module}/../../apps/react/dist/${each.value}")
 
   content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
-
-  depends_on = [null_resource.build_frontend]
 }
 
 locals {
@@ -87,22 +74,6 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-# Build and zip Lambda function
-# resource "null_resource" "build_lambda" {
-#   triggers = {
-#     always_run = "${timestamp()}"
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       echo "Building and zipping Lambda function..."
-#       pnpm --filter server build && \
-#       cd ${path.module}/../../apps/server/.output/server
-#       zip -r ../lambda.zip .
-#     EOT
-#   }
-# }
-
 # Lambda function
 resource "aws_lambda_function" "server" {
   filename      = "${path.module}/../../apps/server/.output/lambda.zip"
@@ -111,8 +82,6 @@ resource "aws_lambda_function" "server" {
   handler       = "index.handler"
   runtime       = "nodejs20.x"
   # source_code_hash = filebase64sha256("./../../apps/server/.output/lambda.zip")
-
-  # depends_on = [null_resource.build_lambda]
 }
 
 # API Gateway

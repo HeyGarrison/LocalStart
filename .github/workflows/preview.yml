@@ -14,22 +14,24 @@ jobs:
         with:
           image-tag: "latest"
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: true
+      - name: Install deps
+        run: |
+          pip install terraform-local
+          pnpm install
 
-      - name: Install tflocal
-        run: pip install terraform-local
-
-      - name: Building apps
+      - name: Build apps
         run: |
           pnpm --filter react build
           pnpm --filter server build
