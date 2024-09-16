@@ -8,16 +8,10 @@ provider "aws" {
   region                      = var.region
   access_key                  = "test"
   secret_key                  = "test"
+  aws_account_id              = "test"
   skip_credentials_validation = true
   skip_metadata_api_check     = true
   skip_requesting_account_id  = true
-
-  endpoints {
-    apigateway = "http://localhost:4566"
-    iam        = "http://localhost:4566"
-    lambda     = "http://localhost:4566"
-    s3         = "http://localhost:4566"
-  }
 }
 
 # S3 bucket for frontend
