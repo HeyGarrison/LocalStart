@@ -19,5 +19,7 @@ jobs:
 
       - name: Run Terraform
         run: |
+          ls
+          pwd
           terraform init
           terraform apply --auto-approve
