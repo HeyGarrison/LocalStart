@@ -14,11 +14,11 @@ jobs:
         with:
           image-tag: "latest"
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+      - name: Install tflocal
+        run: pip install terraform-local
 
-      - name: Run Terraform
+      - name: Run tflocal
         run: |
           cd ./terraform/preview
-          terraform init
-          terraform apply --auto-approve
+          tflocal init
+          tflocal apply --auto-approve
