@@ -19,7 +19,6 @@ jobs:
 
       - name: Run Terraform
         run: |
-          ls
-          pwd
+          cd ./terraform/preview
           terraform init
           terraform apply --auto-approve
