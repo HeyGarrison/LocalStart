@@ -5,6 +5,7 @@ set -e
 
 # LocalStack endpoint
 ENDPOINT_URL="http://localhost:4566"
+pnpm install
 
 # Create S3 bucket for frontend
 echo "Creating S3 bucket for react..."
@@ -35,7 +36,7 @@ awslocal iam create-role --role-name lambda-role --assume-role-policy-document '
       "Action": "sts:AssumeRole"
     }
   ]
-}'
+}' > /dev/null 2>&1
 
 # # Create Lambda function
 echo "Creating Lambda function..."
@@ -43,13 +44,12 @@ pnpm --filter server build
 cd apps/server/.output/server
 zip -r ./lambda.zip .
 cd ../../../../
-pwd
 awslocal lambda create-function \
     --function-name localstart-server \
     --runtime nodejs20.x \
     --zip-file fileb://apps/server/.output/server/lambda.zip \
     --handler index.handler \
-    --role arn:aws:iam::000000000000:role/lambda-role
+    --role arn:aws:iam::000000000000:role/lambda-role > /dev/null 2>&1
 
 # # # Create API Gateway
 echo "Creating API Gateway..."

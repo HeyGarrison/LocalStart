@@ -1,9 +1,9 @@
-name: LocalStack Workflow
+name: Preview Workflow
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
