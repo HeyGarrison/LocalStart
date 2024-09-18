@@ -1,8 +1,37 @@
-name: Preview Workflow
+name: PR and Push Workflow
 
 on: [push, pull_request]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: LocalStack Preview
+        uses: LocalStack/setup-localstack@v0.2.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          preview-cmd: |
+            make install
+            make build
+            make local-deploy
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+
   preview:
     runs-on: ubuntu-latest
     steps:
