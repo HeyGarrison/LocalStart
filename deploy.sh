@@ -77,4 +77,4 @@ awslocal apigateway create-deployment --rest-api-id $API_ID --stage-name local
 # # Print out the URLs
 echo "Deployment complete!"
 echo "Frontend URL: http://localstart-react.s3-website.$REGION.localhost.localstack.cloud:4566"
-echo "API URL: http://$API_ID.execute-api.$REGION.localhost.localstack.cloud:4566/local"
+echo "API URL: http://$API_ID.execute-api.$REGION.localhost.localstack.cloud:4566/local/api"

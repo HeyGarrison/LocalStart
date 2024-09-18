@@ -134,5 +134,5 @@ output "frontend_url" {
 }
 
 output "api_url" {
-  value = "http://${aws_api_gateway_rest_api.api.id}.execute-api.${var.region}.localhost.localstack.cloud:4566/preview"
+  value = "http://${aws_api_gateway_rest_api.api.id}.execute-api.${var.region}.localhost.localstack.cloud:4566/preview/api"
 }

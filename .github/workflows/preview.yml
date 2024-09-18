@@ -29,14 +29,8 @@ jobs:
           include-preview: "true"
           install-awslocal: "true"
           preview-cmd: |
-            pip install terraform-local
-            pnpm install
-            pnpm --filter react build
-            pnpm --filter server build
-            zip -r ./terraform/preview/lambda.zip ./apps/server/.output/server
-            cd ./terraform/preview
-            ls && pwd
-            tflocal init
-            tflocal apply --auto-approve
+            make install
+            make build
+            make local-deploy
         env:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
