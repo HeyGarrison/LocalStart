@@ -9,11 +9,11 @@ NITRO_VERSION := latest
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
-deploy-locally: start-localstack build-app localstack-deploy
+deploy-preview: start-localstack build-app localstack-deploy
 
 start-localstack:
 	@echo "Starting LocalStack..."
-	localstack start -d
+	@localstack start -d
 
 localstack-deploy:
 	@echo "Locally deploying apps..."

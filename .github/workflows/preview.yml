@@ -29,8 +29,6 @@ jobs:
           include-preview: "true"
           install-awslocal: "true"
           preview-cmd: |
-            make install
-            make build
-            make local-deploy
+            make deploy-preview
         env:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
