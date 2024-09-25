@@ -3,7 +3,7 @@ name: PR and Push Workflow
 on: [push, pull_request]
 
 jobs:
-  preview:
+  terraform:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,7 +23,6 @@ jobs:
       - name: LocalStack Preview
         uses: LocalStack/setup-localstack@v0.2.2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           install-awslocal: "true"
           use-pro: "true"
           preview-cmd: |
@@ -34,4 +33,4 @@ jobs:
       - name: install & run
         run: |
           make install
-          deploy-preview-terraform
+          make deploy-preview-terraform

@@ -9,7 +9,7 @@ NITRO_VERSION := latest
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
-deploy-preview: start-localstack build-app localstack-deploy-terraform
+deploy-preview: deploy-preview-terraform
 deploy-preview-terraform: start-localstack build-app localstack-deploy-terraform
 deploy-preview-cdk: start-localstack build-app localstack-deploy-cdk
 
