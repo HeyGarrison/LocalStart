@@ -3,7 +3,7 @@ name: PR and Push Workflow
 on: [push, pull_request]
 
 jobs:
-  terraform:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
