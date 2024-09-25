@@ -5,6 +5,7 @@ set -e
 
 # LocalStack endpoint
 ENDPOINT_URL="http://localhost:4566"
+pwd
 pnpm install
 
 # Create S3 bucket for frontend
@@ -73,6 +74,8 @@ awslocal apigateway put-integration \
 
 # Deploy API
 awslocal apigateway create-deployment --rest-api-id $API_ID --stage-name local
+
+
 
 # # Print out the URLs
 echo "Deployment complete!"

@@ -19,9 +19,9 @@ localstack-deploy:
 	@echo "Locally deploying apps..."
 	@localstack wait
 	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
-	@cp ./apps/server/.output/server/lambda.zip ./terraform/preview
-	@tflocal -chdir=./terraform/preview init
-	@tflocal -chdir=./terraform/preview apply --auto-approve
+	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
+	@tflocal -chdir=./.iac/terraform init
+	@tflocal -chdir=./.iac/terraform apply --auto-approve
 
 build-app:
 	@echo "Building apps..."
@@ -41,3 +41,4 @@ install:
 	@which localstack || brew install localstack
 	@which awslocal || pip install awscli-local
 	@which tflocal || pip install terraform-local
+	@which cdklocal || pnpm install -g aws-cdk-local aws-cdk
