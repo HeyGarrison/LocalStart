@@ -10,8 +10,8 @@ NITRO_VERSION := latest
 start: start-localstack start-app
 stop: stop-localstack stop-app
 deploy-preview: deploy-preview-terraform
-deploy-preview-terraform: localstack-start build-app localstack-deploy-terraform
-deploy-preview-cdk: localstack-start build-app localstack-deploy-cdk
+deploy-preview-terraform: build-app localstack-deploy-terraform
+deploy-preview-cdk: build-app localstack-deploy-cdk
 
 localstack-start:
 	@echo "Starting LocalStack..."
