@@ -30,8 +30,11 @@ jobs:
 
       - name: install & run
         run: |
+          localstack auth show-token
+          make localstack-reset
           make install
           make deploy-preview-terraform
+
           make localstack-reset
           make deploy-preview-cdk
           make localstack-reset
