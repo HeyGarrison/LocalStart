@@ -20,13 +20,11 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-      - name: LocalStack Preview
+      - name: LocalStack
         uses: LocalStack/setup-localstack@v0.2.2
         with:
           install-awslocal: "true"
           use-pro: "true"
-          preview-cmd: |
-            make deploy-preview
         env:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
 
@@ -34,3 +32,7 @@ jobs:
         run: |
           make install
           make deploy-preview-terraform
+          make reset
+          make deploy-preview-cdk
+          make reset
+          sh ./.iac/scripts/deploy.sh
