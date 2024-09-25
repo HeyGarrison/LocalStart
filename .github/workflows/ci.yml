@@ -32,7 +32,7 @@ jobs:
         run: |
           make install
           make deploy-preview-terraform
-          make reset
+          make localstack-reset
           make deploy-preview-cdk
-          make reset
+          make localstack-reset
           sh ./.iac/scripts/deploy.sh
