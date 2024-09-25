@@ -24,11 +24,14 @@ jobs:
         uses: LocalStack/setup-localstack@v0.2.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          state-backend: ephemeral
-          state-action: start
-          include-preview: "true"
           install-awslocal: "true"
+          use-pro: "true"
           preview-cmd: |
             make deploy-preview
         env:
           LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+
+      - name: install & run
+        run: |
+          make install
+          deploy-preview-terraform
