@@ -9,19 +9,26 @@ NITRO_VERSION := latest
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
-deploy-preview: start-localstack build-app localstack-deploy
+deploy-preview: start-localstack build-app localstack-deploy-terraform
+deploy-preview-terraform: start-localstack build-app localstack-deploy-terraform
+deploy-preview-cdk: start-localstack build-app localstack-deploy-cdk
 
 start-localstack:
 	@echo "Starting LocalStack..."
 	@localstack start -d
 
-localstack-deploy:
-	@echo "Locally deploying apps..."
+localstack-deploy-terraform:
+	@echo "Locally deploying apps with Terraform..."
 	@localstack wait
 	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
 	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
 	@tflocal -chdir=./.iac/terraform init
 	@tflocal -chdir=./.iac/terraform apply --auto-approve
+
+localstack-deploy-cdk
+	@echo "Locally deploying apps with CDK..."
+	@localstack wait
+	pnpm --filter ./.iac/cdk run local-deploy-cdk
 
 build-app:
 	@echo "Building apps..."
