@@ -25,7 +25,7 @@ localstack-deploy-terraform:
 	@tflocal -chdir=./.iac/terraform init
 	@tflocal -chdir=./.iac/terraform apply --auto-approve
 
-localstack-deploy-cdk
+localstack-deploy-cdk:
 	@echo "Locally deploying apps with CDK..."
 	@localstack wait
 	pnpm --filter ./.iac/cdk run local-deploy-cdk
