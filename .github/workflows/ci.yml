@@ -27,16 +27,11 @@ jobs:
         with:
           install-awslocal: "true"
           use-pro: "true"
-          preview-cmd: |
-            localstack auth show-token
-
       - name: install & run
         run: |
-          localstack auth set-token ${{ secrets.LOCALSTACK_API_KEY }}
           make localstack-reset
           make install
           make deploy-preview-terraform
-
           make localstack-reset
           make deploy-preview-cdk
           make localstack-reset
