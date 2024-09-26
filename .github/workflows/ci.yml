@@ -32,7 +32,7 @@ jobs:
 
       - name: install & run
         run: |
-          localstack auth show-token
+          localstack auth set-token ${{ secrets.LOCALSTACK_API_KEY }}
           make localstack-reset
           make install
           make deploy-preview-terraform
