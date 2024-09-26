@@ -27,7 +27,7 @@ localstack-deploy-terraform:
 	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
 	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
 	@tflocal -chdir=./.iac/terraform init
-	tflocal -chdir=./.iac/terraform apply --auto-approve
+	@tflocal -chdir=./.iac/terraform apply --auto-approve
 
 localstack-deploy-cdk:
 	@echo "Locally deploying apps with CDK..."
