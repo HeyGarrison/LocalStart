@@ -43,6 +43,21 @@ start-app:
 	@echo "Starting apps..."
 	@pnpm install
 	@pnpm -r dev
+	@awslocal lambda create-function \
+    --function-name health \
+    --runtime "nodejs20.x" \
+    --role arn:aws:iam::123456789012:role/lambda-ex \
+    --code S3Bucket="hot-reload",S3Key="${PWD}/apps/lambda" \
+    --handler health.handler
+
+start-lambda-debug:
+	@echo "stating localstack with lambda debugger..."
+	DEBUG=1 \
+  LAMBDA_REMOTE_DOCKER=0 \
+  LAMBDA_EXECUTOR= \
+  LAMBDA_DOCKER_FLAGS="-e NODE_OPTIONS=--inspect-brk=0.0.0.0:9229 -p 9229:9229" \
+  LOCALSTACK_VOLUME_DIR=./volume \
+  localstack start -d
 
 stop-localstack:
 	@echo "Stopping LocalStack..."
