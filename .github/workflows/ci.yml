@@ -22,11 +22,13 @@ jobs:
           cache: "pnpm"
       - name: LocalStack
         uses: LocalStack/setup-localstack@v0.2.2
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
         with:
           install-awslocal: "true"
           use-pro: "true"
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+          preview-cmd: |
+            localstack auth show-token
 
       - name: install & run
         run: |
