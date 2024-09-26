@@ -28,6 +28,8 @@ jobs:
           install-awslocal: "true"
           use-pro: "true"
       - name: install & run
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
         run: |
           make localstack-reset
           make install
