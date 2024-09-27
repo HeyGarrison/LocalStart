@@ -32,7 +32,7 @@ localstack-deploy-terraform:
 localstack-deploy-cdk:
 	@echo "Locally deploying apps with CDK..."
 	@localstack wait
-	pnpm --filter ./.iac/cdk run local-deploy-cdk
+	@pnpm --filter ./.iac/cdk run local-deploy-cdk
 
 build-app:
 	@echo "Building apps..."
