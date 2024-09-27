@@ -1,0 +1,12 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "health.js",
+  "scripts": {
+    "dev": "node ./dev/create-functions.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
