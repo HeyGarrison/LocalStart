@@ -43,12 +43,6 @@ start-app:
 	@echo "Starting apps..."
 	@pnpm install
 	@pnpm -r dev
-	@awslocal lambda create-function \
-    --function-name health \
-    --runtime "nodejs20.x" \
-    --role arn:aws:iam::123456789012:role/lambda-ex \
-    --code S3Bucket="hot-reload",S3Key="${PWD}/apps/lambda" \
-    --handler health.handler
 
 start-lambda-debug:
 	@echo "stating localstack with lambda debugger..."
