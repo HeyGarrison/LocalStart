@@ -4,10 +4,11 @@ import { fileURLToPath } from "url";
 import { exec } from "child_process";
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
+const parentDir = path.resolve(currentDir, "..");
 
 // Read all .js and .mjs files in the current directory
 try {
-  const files = await fs.readdir(currentDir);
+  const files = await fs.readdir(parentDir);
 
   for (const file of files) {
     if (
