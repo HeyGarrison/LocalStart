@@ -9,7 +9,7 @@ const parentDir = path.resolve(currentDir, "..");
 // Read all .js and .mjs files in the current directory
 try {
   const files = await fs.readdir(parentDir);
-
+  console.log(files);
   for (const file of files) {
     if (
       (file.endsWith(".js") || file.endsWith(".mjs")) &&
@@ -22,7 +22,7 @@ try {
         --function-name ${functionName} \
         --runtime "nodejs20.x" \
         --role arn:aws:iam::123456789012:role/lambda-ex \
-        --code S3Bucket="hot-reload",S3Key="${currentDir}" \
+        --code S3Bucket="hot-reload",S3Key="${parentDir}" \
         --handler ${handler}`;
 
       exec(command, (error, stdout, stderr) => {
