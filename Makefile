@@ -21,6 +21,13 @@ localstack-reset:
 	@echo "Resetting LocalStack..."
 	@localstack state reset
 
+deploy-aws:
+	@echo "Deploying apps with Terraform to AWS..."
+	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
+	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
+	@terraform -chdir=./.iac/terraform init
+	@terraform -chdir=./.iac/terraform apply --auto-approve
+
 localstack-deploy-terraform:
 	@echo "Locally deploying apps with Terraform..."
 	@localstack wait
