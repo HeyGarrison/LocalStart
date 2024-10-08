@@ -62,7 +62,7 @@ RESOURCE_ID=$(awslocal apigateway create-resource --rest-api-id $API_ID --parent
 awslocal apigateway put-method --rest-api-id $API_ID --resource-id $RESOURCE_ID --http-method ANY --authorization-type NONE
 
 # # # Set up Lambda integration
-REGION="us-east-1"
+REGION="us-west-2"
 ACCOUNT_ID="000000000000"
 awslocal apigateway put-integration \
     --rest-api-id $API_ID \

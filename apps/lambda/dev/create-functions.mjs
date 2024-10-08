@@ -23,7 +23,8 @@ try {
         --runtime "nodejs20.x" \
         --role arn:aws:iam::123456789012:role/lambda-ex \
         --code S3Bucket="hot-reload",S3Key="${parentDir}" \
-        --handler ${handler}`;
+        --handler ${handler} \
+        --timeout 120`;
 
       exec(command, (error, stdout, stderr) => {
         if (error) {
