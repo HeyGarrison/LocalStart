@@ -65,4 +65,3 @@ jobs:
           skip-ephemeral-stop: "true"
           preview-cmd: |
             make install
-            make deploy-preview
