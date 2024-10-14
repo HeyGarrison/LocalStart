@@ -37,3 +37,32 @@ jobs:
           make deploy-preview-cdk
           make localstack-reset
           sh ./.iac/scripts/deploy.sh
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: LocalStack
+        uses: LocalStack/setup-localstack@v0.2.2
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+        with:
+          state-backend: ephemeral
+          state-action: start
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-ephemeral-stop: "true"
+          preview-cmd: |
+            make install
+            make deploy-preview
