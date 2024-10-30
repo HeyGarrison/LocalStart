@@ -5,12 +5,12 @@ LOCALSTACK_VERSION := latest
 NITRO_VERSION := latest
 
 # Targets
-.PHONY: start start-localstack start-app stop stop-localstack stop-app
+.PHONY: start start-localstack start-app stop stop-localstack stop-app push-nextjs-image
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
 deploy-preview: deploy-preview-terraform
-deploy-preview-terraform: build-app localstack-deploy-terraform
+deploy-preview-terraform: build-app localstack-deploy-terraform push-nextjs-image
 deploy-preview-cdk: build-app localstack-deploy-cdk
 
 localstack-start:
@@ -27,6 +27,21 @@ deploy-aws:
 	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
 	@terraform -chdir=./.iac/terraform init
 	@terraform -chdir=./.iac/terraform apply --auto-approve
+
+.PHONY: push-image
+
+push-nextjs-image:
+	$(eval REPO_URL := $(shell tflocal -chdir=./.iac/terraform output -raw ecr_repository_url))
+	@if [ -z "$(REPO_URL)" ]; then \
+		echo "Error: Could not get ECR repository URL from Terraform output"; \
+		exit 1; \
+	fi
+	@echo "Building Docker image..."
+	@docker build -t nextjs-docker ./apps/nextjs
+	@echo "Tagging image..."
+	@docker tag nextjs-docker:latest $(REPO_URL):latest
+	@echo "Pushing image to ECR..."
+	@docker push $(REPO_URL):latest
 
 localstack-deploy-terraform:
 	@echo "Locally deploying apps with Terraform..."

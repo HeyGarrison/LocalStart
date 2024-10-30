@@ -128,6 +128,104 @@ resource "aws_lambda_permission" "apigw_lambda" {
   source_arn = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
+
+# ECR Repository
+resource "aws_ecr_repository" "nextjs" {
+  name = "nextjs-docker"
+}
+
+# VPC Resources
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "nextjs-vpc"
+  }
+}
+
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "nextjs-subnet"
+  }
+}
+
+resource "aws_security_group" "ecs" {
+  name        = "ecs-sg"
+  description = "ECS Security Group"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# ECS Cluster
+resource "aws_ecs_cluster" "main" {
+  name = "nextjs-cluster"
+}
+
+# ECS Task Definition
+resource "aws_ecs_task_definition" "nextjs" {
+  family                   = "nextjs-task"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = 256
+  memory                   = 512
+
+  container_definitions = jsonencode([
+    {
+      name      = "nextjs-docker"
+      image     = "${aws_ecr_repository.nextjs.repository_url}:latest"
+      cpu       = 256
+      memory    = 512
+      essential = true
+      portMappings = [
+        {
+          containerPort = 3000
+          hostPort      = 3000
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
+}
+
+# ECS Service
+resource "aws_ecs_service" "nextjs" {
+  name            = "nextjs-service"
+  cluster         = aws_ecs_cluster.main.id
+  task_definition = aws_ecs_task_definition.nextjs.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets         = [aws_subnet.main.id]
+    security_groups = [aws_security_group.ecs.id]
+  }
+}
+
+# outputs.tf
+output "ecr_repository_url" {
+  value = aws_ecr_repository.nextjs.repository_url
+}
+
+output "ecs_cluster_name" {
+  value = aws_ecs_cluster.main.name
+}
+
 # Output
 output "frontend_url" {
   value = "http://${aws_s3_bucket.frontend.id}.s3-website.${var.region}.localhost.localstack.cloud:4566"
