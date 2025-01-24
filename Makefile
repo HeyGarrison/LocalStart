@@ -5,28 +5,13 @@ LOCALSTACK_VERSION := latest
 NITRO_VERSION := latest
 
 # Targets
-.PHONY: start start-localstack start-app stop stop-localstack stop-app push-nextjs-image
+.PHONY: start start-localstack start-app stop stop-localstack stop-app
 
 start: start-localstack start-app
 stop: stop-localstack stop-app
 deploy-preview: deploy-preview-terraform
 deploy-preview-terraform: build-app localstack-deploy-terraform push-nextjs-image
 deploy-preview-cdk: build-app localstack-deploy-cdk
-
-localstack-start:
-	@echo "Starting LocalStack..."
-	@localstack start -d
-
-localstack-reset:
-	@echo "Resetting LocalStack..."
-	@localstack state reset
-
-deploy-aws:
-	@echo "Deploying apps with Terraform to AWS..."
-	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
-	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
-	@terraform -chdir=./.iac/terraform init
-	@terraform -chdir=./.iac/terraform apply --auto-approve
 
 .PHONY: push-image
 
@@ -42,6 +27,21 @@ push-nextjs-image:
 	@docker tag nextjs-docker:latest $(REPO_URL):latest
 	@echo "Pushing image to ECR..."
 	@docker push $(REPO_URL):latest
+
+localstack-start:
+	@echo "Starting LocalStack..."
+	@localstack start -d
+
+localstack-reset:
+	@echo "Resetting LocalStack..."
+	@localstack state reset
+
+deploy-aws:
+	@echo "Deploying apps with Terraform to AWS..."
+	@cd ./apps/server/.output/server && zip -r ./lambda.zip . && cd -
+	@cp ./apps/server/.output/server/lambda.zip ./.iac/terraform
+	@terraform -chdir=./.iac/terraform init
+	@terraform -chdir=./.iac/terraform apply --auto-approve
 
 localstack-deploy-terraform:
 	@echo "Locally deploying apps with Terraform..."
@@ -59,7 +59,8 @@ localstack-deploy-cdk:
 build-app:
 	@echo "Building apps..."
 	@pnpm install
-	@pnpm -r build
+	@pnpm --filter react build
+	@pnpm --filter server build
 
 start-app:
 	@echo "Starting apps..."
