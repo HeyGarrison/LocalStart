@@ -319,5 +319,5 @@ output "api_url" {
 }
 
 output "nextjs_url" {
-  value = "http://${aws_lb.nextjs.name}.${var.region}.localhost.localstack.cloud:4566"
+  value = "http://${aws_lb.nextjs.name}.elb.localhost.localstack.cloud:3000"
 }
