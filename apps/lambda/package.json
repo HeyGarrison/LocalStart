@@ -3,10 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "health.js",
+  "type": "module",
   "scripts": {
-    "dev": "node ./dev/create-functions.mjs"
+    "dev": "node ./dev/create-functions.mjs",
+    "build": "node ./dev/build.mjs",
+    "build:watch": "node ./dev/build.mjs --watch"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
+    "node-fetch": "^3.3.2",
+    "snowflake-sdk": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.124",
+    "esbuild": "^0.20.0"
+  }
 }
